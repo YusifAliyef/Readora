@@ -7,6 +7,7 @@ const cors=require("cors");
 const connectDB=require("./src/config/db");
 const bodyParser=require("body-parser");
 const userRouter = require('./src/routes/user.routes');
+const bookRouter = require('./src/routes/book.routes');
 
 
 const app=express();
@@ -22,6 +23,7 @@ app.use(cors());
 connectDB();
 
 app.use(userRouter);
+app.use(bookRouter);
 
 // Serveri dinləyirik
 app.listen(process.env.PORT, () => {
