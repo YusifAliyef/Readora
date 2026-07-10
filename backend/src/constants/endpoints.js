@@ -18,6 +18,10 @@ const endpoints = {
     getMy: "/reservations/my",
     approve: "/reservations/:id/approve",
   },
+  loans: {
+    getMy: "/loans/my",
+    return: "/loans/:id/return",
+  },
 };
 
 module.exports = endpoints;

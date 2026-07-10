@@ -9,7 +9,7 @@ const bodyParser=require("body-parser");
 const userRouter = require('./src/routes/user.routes');
 const bookRouter = require('./src/routes/book.routes');
 const reservationRouter = require('./src/routes/reservation.routes');
-
+const loanRouter = require("./src/routes/loan.routes");
 
 const app=express();
 dotenv.config();
@@ -26,7 +26,7 @@ connectDB();
 app.use(userRouter);
 app.use(bookRouter);
 app.use(reservationRouter);
-
+app.use(loanRouter);
 // Serveri dinləyirik
 app.listen(process.env.PORT, () => {
     console.log("API Listened");
