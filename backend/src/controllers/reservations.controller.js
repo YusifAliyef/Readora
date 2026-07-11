@@ -6,7 +6,7 @@ const reservationsController = {
   create: async (req, res) => {
     try {
       const { bookId } = req.body;
-     const userId = req.user.userId;
+      const userId = req.user.userId;
 
       // Kitabın olub-olmadığını və stokunu yoxlayaq
       const book = await Book.findById(bookId);
@@ -65,6 +65,37 @@ const reservationsController = {
       res.status(500).json({ message: "Xəta baş verdi" });
     }
   },
+  // Mövcud metodların altına əlavə et:
+  deleteReservation: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.user.userId || req.user.id || req.user._id;
+
+      const reservation = await Reservation.findById(id);
+      if (!reservation) {
+        return res.status(404).json({ message: "Rezervasiya tapılmadı" });
+      }
+
+      // Təhlükəsizlik: İstifadəçi yalnız öz rezervasiyasını silə bilsin
+      if (reservation.user.toString() !== userId.toString()) {
+        return res
+          .status(403)
+          .json({ message: "Bu əməliyyat üçün icazəniz yoxdur" });
+      }
+
+      // Əgər admin tərəfindən təsdiqlənmiş rezervasiya silinirsə, kitab stoku geri qaytarılır
+      if (reservation.status === "approved") {
+        await Book.findByIdAndUpdate(reservation.book, { $inc: { stock: 1 } });
+      }
+
+      await Reservation.findByIdAndDelete(id);
+      res
+        .status(200)
+        .json({ message: "Rezervasiya uğurla ləğv edildi və silindi" });
+    } catch (error) {
+      res.status(500).json({ message: "Xəta baş verdi", error: error.message });
+    }
+  },
 };
 
-module.exports=reservationsController
+module.exports = reservationsController;

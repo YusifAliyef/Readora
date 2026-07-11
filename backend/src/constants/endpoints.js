@@ -17,10 +17,14 @@ const endpoints = {
     post: "/reservations",
     getMy: "/reservations/my",
     approve: "/reservations/:id/approve",
+    deleteReservation: "/reservations/:id",
   },
   loans: {
     getMy: "/loans/my",
     return: "/loans/:id/return",
+  },
+  reviews: {
+    post: "/reviews",
   },
 };
 
