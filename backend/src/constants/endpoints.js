@@ -25,6 +25,17 @@ const endpoints = {
   },
   reviews: {
     post: "/reviews",
+    getByBook: "/reviews/book/:bookId",
+    put: "/reviews/:id",
+    delete: "/reviews/:id",
+  },
+  admin: {
+    stats: "/admin/stats",
+  },
+  wishlist: {
+    get: "/wishlist",
+    post: "/wishlist",
+    delete: "/wishlist/:id",
   },
 };
 

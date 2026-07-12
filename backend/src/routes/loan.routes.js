@@ -2,6 +2,7 @@ const express = require("express");
 const endpoints = require("../constants/endpoints");
 const loansController = require("../controllers/loans.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
+const validateLoan = require("../middlewares/loans.middleware");
 
 const loanRouter = express.Router();
 
@@ -16,6 +17,7 @@ loanRouter.get(
 loanRouter.put(
   endpoints.loans.return,
   authMiddleware,
+  validateLoan,
   loansController.returnBook,
 );
 

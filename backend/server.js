@@ -11,6 +11,8 @@ const bookRouter = require('./src/routes/book.routes');
 const reservationRouter = require('./src/routes/reservation.routes');
 const loanRouter = require("./src/routes/loan.routes");
 const reviewRouter = require('./src/routes/review.routes');
+const adminRouter = require('./src/routes/admin.routes');
+const wishlistRouter = require('./src/routes/wishlist.routes');
 
 const app=express();
 dotenv.config();
@@ -29,6 +31,8 @@ app.use(bookRouter);
 app.use(reservationRouter);
 app.use(loanRouter);
 app.use(reviewRouter);
+app.use(adminRouter);
+app.use(wishlistRouter);
 
 
 // Serveri dinləyirik

@@ -1,5 +1,6 @@
 const Loan = require("../models/loan.model");
 const Book = require("../models/books.model");
+const { getDaysDifference } = require("../utils/date.helpers");
 
 const loanController = {
   // 1. İstifadəçinin öz icarə tarixçəsi və canlı cərimə hesabı
@@ -38,35 +39,49 @@ const loanController = {
   returnBook: async (req, res) => {
     try {
       const { id } = req.params;
-      const loan = await Loan.findById(id);
+      const currentDate = new Date(); // Bu günün tarixi
 
+      const loan = await Loan.findById(id);
       if (!loan) {
         return res.status(404).json({ message: "İcarə qeydi tapılmadı" });
       }
+
       if (loan.status === "returned") {
         return res.status(400).json({ message: "Bu kitab artıq qaytarılıb" });
       }
 
-      // Qaytarılma tarixini bu gün edirik
-      loan.returnDate = new Date();
-      loan.status = "returned";
-      // Əgər gecikmə varsa, yekun cəriməni rəsmi olaraq qeyd edirik
-      if (loan.returnDate > loan.dueDate) {
-        const DAILY_FINE_RATE = 0.5;
-        const diffTime = Math.abs(loan.returnDate - loan.dueDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        loan.fine = diffDays * DAILY_FINE_RATE;
+      // 2. Helper funksiyasından istifadə edərək gecikmə gününü hesablayırıq
+      // loan.due_date -> qaytarılmalı olan son tarix
+      const overdueDays = getDaysDifference(loan.due_date, currentDate);
+
+      let fineAmount = 0;
+      if (overdueDays > 0) {
+        // Məsələn: hər gecikmiş gün üçün 0.50 AZN cərimə
+        fineAmount = overdueDays * 0.5;
       }
 
-      await loan.save();
-      // Kitab qaytarıldığı üçün stoku 1 ədəd artırırıq
-      await Book.findByIdAndUpdate(loan.book, { $inc: { stock: 1 } });
+      // İcarə məlumatlarını yeniləyirik
+      loan.return_date = currentDate;
+      loan.status = "returned";
 
-      res
-        .status(200)
-        .json({ message: "Kitab uğurla qaytarıldı və stok yeniləndi", loan });
+      // Əgər modelində fine (cərimə) xanaları varsa, bura mənimsədirik
+      loan.fine = fineAmount;
+
+      await loan.save();
+
+      // Kitabın mövcud sayını (available_copies) 1 ədəd artırırıq
+      await Book.findByIdAndUpdate(loan.book, {
+        $inc: { available_copies: 1 },
+      });
+
+      res.status(200).json({
+        message: "Kitab uğurla qaytarıldı",
+        overdueDays,
+        fineAmount,
+        loan,
+      });
     } catch (error) {
-      res.status(500).json({ message: "Xəta baş verdi" });
+      res.status(500).json({ message: "Xəta baş verdi", error: error.message });
     }
   },
 };
