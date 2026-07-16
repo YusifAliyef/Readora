@@ -1,18 +1,16 @@
 const Joi = require("joi");
 
 const wishlistBodySchema = Joi.object({
-  bookId: Joi.string().hex().length(24).required().messages({
-    "string.hex": "Kitab ID-si düzgün formatda deyil",
-    "string.length": "Kitab ID-si 24 simvoldan ibarət olmalıdır",
-    "any.required": "Kitab ID-si mütləqdir",
-  }),
+  bookId: Joi.string().required(),
+  userId: Joi.string().required(), 
 });
 
 const wishlistParamsSchema = Joi.object({
-  id: Joi.string().hex().length(24).required().messages({
-    "string.hex": "İstək siyahısı ID-si düzgün formatda deyil",
-    "string.length": "İstək siyahısı ID-si 24 simvoldan ibarət olmalıdır",
-  }),
+  id: Joi.string().required(),
 });
 
+module.exports = {
+  wishlistBodySchema,
+  wishlistParamsSchema,
+};
 module.exports = { wishlistBodySchema, wishlistParamsSchema };

@@ -1,0 +1,12 @@
+@mixin container-90 {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+}

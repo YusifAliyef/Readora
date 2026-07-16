@@ -93,7 +93,7 @@ const bookController = {
   delete: async (req, res) => {
     try {
       const deletedBook = await Book.findByIdAndDelete(req.params.id);
-      if (deletedBook) {
+      if (!deletedBook) {
         res.status(404).json({ message: "Book not found" });
       }
       res.status(200).json({ message: "Book deleted successfully" });

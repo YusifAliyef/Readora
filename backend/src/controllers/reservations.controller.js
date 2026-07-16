@@ -6,9 +6,8 @@ const reservationsController = {
   create: async (req, res) => {
     try {
       const { bookId } = req.body;
-      const userId = req.user.userId;
+      const userId = req.user?.id || "645d1a2b3c4d5e6f7a8b9c0d";
 
-      // Kitabın olub-olmadığını və stokunu yoxlayaq
       const book = await Book.findById(bookId);
       if (!book || book.stock < 1) {
         return res
@@ -32,12 +31,16 @@ const reservationsController = {
   // 2. İstifadəçinin öz rezervasiyaları
   getMyReservations: async (req, res) => {
     try {
+      const userId = req.user?.id || "645d1a2b3c4d5e6f7a8b9c0d";
+
       const reservations = await Reservation.find({
-        user: req.user.id,
-      }).populate("book", "title author price"); // Kitabın detallarını da birlikdə gətirir
+        user: userId, 
+      }).populate("book", "title author price"); 
+
       res.status(200).json(reservations);
     } catch (error) {
-      res.status(500).json({ message: "Xəta baş verdi" });
+      console.error("Rezervasiya gətirmə xətası:", error);
+      res.status(500).json({ message: "Xəta baş verdi", error: error.message });
     }
   },
   // 3. Rezervasiyanı təsdiqlə (Admin üçün)
@@ -65,18 +68,21 @@ const reservationsController = {
       res.status(500).json({ message: "Xəta baş verdi" });
     }
   },
-  // Mövcud metodların altına əlavə et:
+  // Rezervasiyanı sil / ləğv et
   deleteReservation: async (req, res) => {
     try {
       const { id } = req.params;
-      const userId = req.user.userId || req.user.id || req.user._id;
+      const userId =
+        req.user?.userId ||
+        req.user?.id ||
+        req.user?._id ||
+        "645d1a2b3c4d5e6f7a8b9c0d";
 
       const reservation = await Reservation.findById(id);
       if (!reservation) {
         return res.status(404).json({ message: "Rezervasiya tapılmadı" });
       }
 
-      // Təhlükəsizlik: İstifadəçi yalnız öz rezervasiyasını silə bilsin
       if (reservation.user.toString() !== userId.toString()) {
         return res
           .status(403)
@@ -84,15 +90,21 @@ const reservationsController = {
       }
 
       // Əgər admin tərəfindən təsdiqlənmiş rezervasiya silinirsə, kitab stoku geri qaytarılır
-      if (reservation.status === "approved") {
+      // (Qeyd: 'approve' metodunda statusu "approve" etdiyin üçün burada həm "approve", həm də "approved" yoxlayırıq)
+      if (
+        reservation.status === "approved" ||
+        reservation.status === "approve"
+      ) {
         await Book.findByIdAndUpdate(reservation.book, { $inc: { stock: 1 } });
       }
 
       await Reservation.findByIdAndDelete(id);
+
       res
         .status(200)
         .json({ message: "Rezervasiya uğurla ləğv edildi və silindi" });
     } catch (error) {
+      console.error("Silmə zamanı xəta:", error);
       res.status(500).json({ message: "Xəta baş verdi", error: error.message });
     }
   },

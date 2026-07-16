@@ -1,0 +1,136 @@
+.header {
+  background: rgba(246, 241, 228, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200, 162, 77, 0.35);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.container {
+  width: 96%;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 84px;
+}
+
+.logo {
+  font-family: "Fraunces", serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #14110f;
+  cursor: pointer;
+  letter-spacing: -0.02em;
+
+  span {
+    color: #c8a24d;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 40px;
+}
+
+.navLink {
+  position: relative;
+  text-decoration: none;
+  color: #4a4642;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #c8a24d;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: #0f3d3a;
+    &::after { width: 100%; }
+  }
+}
+
+.rightActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wishlistBtn {
+  background: none;
+  border: 1px solid transparent;
+  color: #4a4642;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: #7c2d3a;
+    background: rgba(124, 45, 58, 0.08);
+    transform: scale(1.1);
+  }
+}
+
+.wishlistWrapper {
+  position: relative;
+}
+
+.wishlistBtn {
+  position: relative;
+}
+
+.wishlistBadge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #7c2d3a;
+  color: #f6f1e4;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+.reservationsBtn {
+  background-color: #0f3d3a;
+  color: #f6f1e4;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #c8a24d;
+    color: #14110f;
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav { display: none; }
+}
