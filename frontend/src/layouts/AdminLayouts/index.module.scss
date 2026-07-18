@@ -1,0 +1,112 @@
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f1e4;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #123f3c 0%, #0f2624 60%, #14110f 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand {
+  font-family: "Fraunces", serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #f6f1e4;
+  padding: 0 10px 30px;
+  border-bottom: 1px solid rgba(246,241,228,0.1);
+  margin-bottom: 20px;
+
+  span { color: #c8a24d; }
+
+  small {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8a988f;
+    margin-top: 4px;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: #c9c3b8;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover { background: rgba(200,162,77,0.1); color: #f6f1e4; }
+}
+
+.navLinkActive {
+  background: rgba(200,162,77,0.16);
+  color: #c8a24d;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid rgba(246,241,228,0.15);
+  color: #c9c3b8;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover { background: rgba(124,45,58,0.2); color: #f6f1e4; border-color: transparent; }
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  padding: 22px 40px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(20,17,15,0.06);
+  font-size: 0.95rem;
+  color: #4a4642;
+
+  strong { font-family: "Fraunces", serif; color: #14110f; }
+}
+
+.pageBody {
+  padding: 40px;
+}
+
+@media (max-width: 900px) {
+  .sidebar { width: 84px; padding: 24px 12px; }
+  .brand small, .brand { font-size: 0; }
+  .brand::before { content: "R."; font-size: 1.4rem; }
+  .navLink span, .navLink { font-size: 0; gap: 0; justify-content: center; }
+  .logoutBtn { font-size: 0; justify-content: center; }
+  .pageBody { padding: 24px; }
+}

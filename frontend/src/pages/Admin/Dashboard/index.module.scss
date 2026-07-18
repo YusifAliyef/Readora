@@ -1,0 +1,59 @@
+.header { margin-bottom: 34px; }
+
+.eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c8a24d;
+  margin-bottom: 8px;
+}
+
+.header h1 {
+  font-family: "Fraunces", serif;
+  font-size: 2rem;
+  color: #14110f;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(20,17,15,0.06);
+  border-top: 3px solid #0f3d3a;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover { transform: translateY(-4px); box-shadow: 0 20px 34px rgba(20,17,15,0.08); }
+
+  strong {
+    font-family: "Fraunces", serif;
+    font-size: 2rem;
+    color: #14110f;
+  }
+
+  span {
+    font-size: 0.85rem;
+    color: #6b6560;
+    font-weight: 600;
+  }
+}
+
+.cardIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}

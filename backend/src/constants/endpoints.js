@@ -16,7 +16,9 @@ const endpoints = {
   reservation: {
     post: "/reservations",
     getMy: "/reservations/my",
+    getAll: "/reservations", // ← əlavə et (admin üçün, query ilə fərqlənir)
     approve: "/reservations/:id/approve",
+    reject: "/reservations/:id/reject", // ← əlavə et
     deleteReservation: "/reservations/:id",
   },
   loans: {

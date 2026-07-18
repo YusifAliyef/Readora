@@ -6,7 +6,7 @@ const bookController = {
     try {
       // URL-dən gələn query parametrlərini götürürük (Məsələn: ?page=1&limit=5&search=Dədə)
       const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 10;
+      const limit = parseInt(req.query.limit) || 12;
       const search = req.query.search || "";
       // Axtarış üçün filtri hazırlayırıq (böyük/kiçik hərf fərqi olmadan - "i")
       const searchFilter = {

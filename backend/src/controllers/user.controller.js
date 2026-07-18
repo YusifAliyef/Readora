@@ -51,15 +51,17 @@ const userController = {
       const isValidPassword = await bcrypt.compare(password, user.password);
 
       const token = jwt.sign(
-        { userId: user._id, userName: user.userName },
+        { userId: user._id, userName: user.userName, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: "1h" },
       );
+
       if (isValidPassword) {
         res.status(201).json({
           message: "Uğurla daxil oldunuz",
           userName: user.userName,
           fullName: user.fullName,
+          role: user.role, 
           id: user._id,
           token,
         });

@@ -1,4 +1,3 @@
-// 1. Kitabların yerləşdiyi Grid sistemi (Responsive)
 .booksWrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -7,14 +6,14 @@
 
 .pageHeader {
   margin-bottom: 32px;
-  
+
   h2 {
     font-size: 2rem;
     color: #1e293b;
     margin-bottom: 8px;
     font-weight: 700;
   }
-  
+
   p {
     color: #64748b;
     font-size: 1rem;
@@ -23,32 +22,28 @@
 
 .booksGrid {
   display: grid;
-  // Ekran ölçüsünə görə avtomatik olaraq yan-yana 3-4 sütun edir, mobildə isə alt-alta tək sütuna salır
+
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
   width: 100%;
 }
 
-.noBooks, .loadingState, .errorState {
+.noBooks,
+.loadingState,
+.errorState {
   text-align: center;
   padding: 40px;
   font-size: 1.1rem;
   color: #64748b;
 }
 
-// ==========================================
-// 2. Təsdiq Modalı (Responsive və Glassmorphism)
-// ==========================================
-
-// Modalın arxa fonunu bulandıran örtük
 .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(15, 23, 42, 0.4); // Yumşaq qaranlıq fon
-  backdrop-filter: blur(4px); // Müasir şüşə effekti
+  background-color: rgba(15, 23, 42, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,16 +51,17 @@
   animation: fadeIn 0.2s ease-out;
 }
 
-// Modal pəncərəsi
 .modalContent {
   background: #ffffff;
   padding: 32px;
   border-radius: 20px;
   max-width: 420px;
-  width: 90%; // Mobildə kənarlardan sıxılması üçün responsive genişlik
+  width: 90%;
   text-align: center;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  animation: scaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); // Qəşəng sıçrayış animasiyası
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: scaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   .modalIcon {
     font-size: 3rem;
@@ -92,7 +88,6 @@
   }
 }
 
-// Düymələrin yerləşməsi (Mobildə alt-alta, normalda yan-yana)
 .modalActions {
   display: flex;
   gap: 12px;
@@ -107,7 +102,7 @@
     transition: all 0.2s ease;
     border: none;
     outline: none;
-    flex: 1; // Düymələrin enini bərabərləşdirir
+    flex: 1;
   }
 
   .cancelBtn {
@@ -121,7 +116,7 @@
   }
 
   .confirmBtn {
-    background-color: #0f172a; // Sənin brendin tünd rəngi
+    background-color: #0f172a;
     color: #ffffff;
 
     &:hover {
@@ -135,10 +130,54 @@
   }
 }
 
-// Animasiyalar
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 40px 0;
+
+  button {
+    min-width: 110px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #12463f;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      background-color: #0d3530;
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      background-color: #cfd8d5;
+      color: #7b7b7b;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  span {
+    min-width: 60px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #12344d;
+  }
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleUp {
@@ -152,16 +191,15 @@
   }
 }
 
-// Mobil ekranlar üçün əlavə responsive tənzimləmə
 @media (max-width: 480px) {
   .modalContent {
     padding: 24px 16px;
   }
-  
+
   .modalActions {
-    flex-direction: column-reverse; // Mobildə imtina düyməsini aşağı salır
+    flex-direction: column-reverse;
     gap: 8px;
-    
+
     button {
       width: 100%;
     }

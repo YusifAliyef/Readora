@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "admin",
+    },
   },
   {
     timestamps: true, // created_at və updated_at tarixlərini avtomatik idarə edir

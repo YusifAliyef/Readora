@@ -1,0 +1,119 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #f6f1e4;
+}
+
+.glowGold {
+  position: absolute; top: -10%; right: -8%; width: 45vw; height: 45vw; border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,162,77,0.16) 0%, transparent 70%);
+}
+.glowEmerald {
+  position: absolute; bottom: -15%; left: -10%; width: 50vw; height: 50vw; border-radius: 50%;
+  background: radial-gradient(circle, rgba(15,61,58,0.12) 0%, transparent 70%);
+}
+.dotGrid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(20,17,15,0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 26px;
+  border: 1px solid rgba(20,17,15,0.06);
+  border-top: 3px solid #0f3d3a;
+  padding: 46px 42px;
+  box-shadow: 0 30px 60px rgba(20,17,15,0.1);
+}
+
+.brand {
+  font-family: "Fraunces", serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #14110f;
+  margin-bottom: 26px;
+
+  span { color: #c8a24d; }
+
+  small {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a3948a;
+    margin-top: 4px;
+  }
+}
+
+.card h1 {
+  font-family: "Fraunces", serif;
+  font-size: 1.7rem;
+  color: #14110f;
+  margin-bottom: 8px;
+}
+
+.card p {
+  color: #6b6560;
+  font-size: 0.92rem;
+  margin-bottom: 30px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #14110f;
+  margin-bottom: 20px;
+}
+
+form input {
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(20,17,15,0.12);
+  background: #f6f1e4;
+  color: #14110f;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #c8a24d;
+    box-shadow: 0 0 0 3px rgba(200,162,77,0.2);
+  }
+}
+
+.submitBtn {
+  width: 100%;
+  background: #0f3d3a;
+  color: #f6f1e4;
+  border: none;
+  padding: 15px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.25s ease, transform 0.2s ease;
+
+  &:hover:not(:disabled) { background: #c8a24d; color: #14110f; transform: translateY(-2px); }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}

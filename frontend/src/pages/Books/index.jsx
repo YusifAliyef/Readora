@@ -9,6 +9,9 @@ function Books() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
 
@@ -16,18 +19,23 @@ function Books() {
     const fetchBooks = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3300/books");
-        setBooks(response.data.books || response.data);
-        setLoading(false);
+
+        const response = await axios.get(
+          `http://localhost:3300/books?page=${page}&limit=12`,
+        );
+
+        setBooks(response.data.books);
+        setTotalPages(response.data.totalPage);
       } catch (err) {
-        console.error("Məlumat çəkilərkən xəta baş verdi:", err);
+        console.error(err);
         setError("Kitabları yükləmək mümkün olmadı.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchBooks();
-  }, []);
+  }, [page]);
 
   const handleOpenConfirmModal = (book) => {
     setSelectedBook(book);
@@ -108,6 +116,22 @@ function Books() {
         ) : (
           <p className={styles.noBooks}>Bazada hələ heç bir kitab tapılmadı.</p>
         )}
+      </div>
+      <div className={styles.pagination}>
+        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          ⬅ Əvvəlki
+        </button>
+
+        <span>
+          {page} / {totalPages}
+        </span>
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Sonrakı ➡
+        </button>
       </div>
 
       {isModalOpen && selectedBook && (

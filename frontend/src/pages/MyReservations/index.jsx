@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
 import styles from "./index.module.scss";
 
 function MyReservations() {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedResId, setSelectedResId] = useState(null);
-  const [selectedBookTitle, setSelectedBookTitle] = useState("");
 
   useEffect(() => {
     const fetchMyReservations = async () => {
@@ -33,52 +29,9 @@ function MyReservations() {
     fetchMyReservations();
   }, []);
 
-  const handleOpenDeleteModal = (id, bookTitle) => {
-    setSelectedResId(id);
-    setSelectedBookTitle(bookTitle || "Bilinməyən Kitab");
-    setIsModalOpen(true);
-  };
-
-  const handleDeleteConfirm = async () => {
-    if (!selectedResId) return;
-
-    setIsModalOpen(false);
-    const loadingToast = toast.loading("Rezervasiya silinir...");
-
-    try {
-      await axios.delete(`http://localhost:3300/reservations/${selectedResId}`);
-
-      toast.dismiss(loadingToast);
-      toast.success("Rezervasiya uğurla silindi! 🎉");
-
-      setReservations((prev) =>
-        prev.filter(
-          (item) => item._id !== selectedResId && item.id !== selectedResId,
-        ),
-      );
-    } catch (err) {
-      toast.dismiss(loadingToast);
-      console.error("Rezervasiya silinərkən xəta baş verdi:", err);
-
-      const errorData = err.response?.data;
-      let serverMessage = "";
-
-      if (errorData && typeof errorData === "object") {
-        serverMessage =
-          errorData.message || errorData.error || JSON.stringify(errorData);
-      } else {
-        serverMessage = errorData || err.message;
-      }
-
-      toast.error(`Silinmədi: ${serverMessage}`);
-    } finally {
-      setSelectedResId(null);
-      setSelectedBookTitle("");
-    }
-  };
-
   const getStatusBadge = (status) => {
     switch (status?.toLowerCase()) {
+      case "approve":
       case "approved":
       case "təsdiqləndi":
         return (
@@ -142,7 +95,6 @@ function MyReservations() {
                 <th>Müəllif</th>
                 <th>Qiymət</th>
                 <th>Status</th>
-                <th>Əməliyyat</th>
               </tr>
             </thead>
             <tbody>
@@ -157,16 +109,6 @@ function MyReservations() {
                     <td>{bookData?.author || "Bilinməyən Müəllif"}</td>
                     <td>{bookData?.price ? `${bookData.price} AZN` : "-"}</td>
                     <td>{getStatusBadge(resItem.status)}</td>
-                    <td>
-                      <button
-                        onClick={() =>
-                          handleOpenDeleteModal(itemId, bookData?.title)
-                        }
-                        className={styles.cancelBtn}
-                      >
-                        Sil
-                      </button>
-                    </td>
                   </tr>
                 );
               })}
@@ -176,37 +118,6 @@ function MyReservations() {
       ) : (
         <div className={styles.noReservations}>
           <p>Hələ ki, heç bir kitab rezervasiya etməmisiniz.</p>
-        </div>
-      )}
-
-      {isModalOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <div className={styles.modalIcon}>🗑️</div>
-            <h3>Rezervasiyanı Sil</h3>
-            <p className={styles.modalText}>
-              <strong>"{selectedBookTitle}"</strong> kitabına olan
-              rezervasiyanızı silmək istədiyinizdən əminsiniz?
-            </p>
-            <div className={styles.modalActions}>
-              <button
-                className={styles.modalCancelBtn}
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setSelectedResId(null);
-                  setSelectedBookTitle("");
-                }}
-              >
-                İmtina et
-              </button>
-              <button
-                className={styles.modalConfirmBtn}
-                onClick={handleDeleteConfirm}
-              >
-                Bəli, silinsin
-              </button>
-            </div>
-          </div>
         </div>
       )}
     </div>
