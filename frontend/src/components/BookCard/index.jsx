@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useWishlist } from "../../context/Wishlist";
 import styles from "./index.module.scss";
 
 function BookCard({ book, onReserve }) {
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const navigate = useNavigate();
 
   const imageUrl = book.image?.startsWith("http")
     ? book.image
@@ -20,9 +22,14 @@ function BookCard({ book, onReserve }) {
   const bookId = book._id || book.id;
   const active = isInWishlist(bookId);
 
-  const handleWishlistClick = async(e) => {
+  const handleWishlistClick = async (e) => {
     e.stopPropagation();
-      await toggleWishlist(book);
+    await toggleWishlist(book);
+  };
+
+  const handleReviewsClick = (e) => {
+    e.stopPropagation();
+    navigate(`/books/${bookId}/reviews`);
   };
 
   return (
@@ -77,6 +84,9 @@ function BookCard({ book, onReserve }) {
         <div className={styles.footerRow}>
           <button className={styles.reserveBtn} onClick={() => onReserve(book)}>
             Rezervasiya Et
+          </button>
+          <button className={styles.reviewsBtn} onClick={handleReviewsClick}>
+            Rəylər
           </button>
         </div>
       </div>

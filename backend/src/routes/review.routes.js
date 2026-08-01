@@ -34,4 +34,9 @@ reviewRouter.delete(
   reviewsController.deleteReview,
 );
 
+reviewRouter.get(
+  endpoints.reviews.getMy,
+  authMiddleware,
+  reviewsController.getMyReviews,
+);
 module.exports = reviewRouter;

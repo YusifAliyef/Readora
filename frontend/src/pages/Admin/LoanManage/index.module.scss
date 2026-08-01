@@ -1,0 +1,207 @@
+.page { position: relative; }
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c8a24d;
+  margin-bottom: 8px;
+}
+
+.header h1 {
+  font-family: "Fraunces", serif;
+  font-size: 1.9rem;
+  color: #14110f;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 30px;
+  border: 1px solid rgba(20,17,15,0.06);
+}
+
+.filterBtn, .filterActive {
+  border: none;
+  padding: 9px 18px;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterBtn {
+  background: transparent;
+  color: #6b6560;
+  &:hover { background: rgba(200,162,77,0.08); }
+}
+
+.filterActive {
+  background: #0f3d3a;
+  color: #f6f1e4;
+}
+
+.tableWrapper {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(20,17,15,0.06);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  thead {
+    background: rgba(15,61,58,0.05);
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 700;
+      color: #0f3d3a;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  tbody tr {
+    border-top: 1px solid rgba(20,17,15,0.05);
+    transition: background 0.15s ease;
+    &:hover { background: rgba(200,162,77,0.05); }
+  }
+
+  td {
+    padding: 16px 20px;
+    color: #4a4642;
+    vertical-align: middle;
+    strong { font-family: "Fraunces", serif; color: #14110f; }
+  }
+}
+
+.fineText { color: #7c2d3a; font-weight: 700; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  &.active { background: rgba(15,61,58,0.1); color: #0f3d3a; border: 1px solid rgba(15,61,58,0.25); }
+  &.overdue { background: rgba(124,45,58,0.1); color: #7c2d3a; border: 1px solid rgba(124,45,58,0.25); }
+  &.returned { background: rgba(200,162,77,0.15); color: #a8842f; border: 1px solid rgba(200,162,77,0.35); }
+}
+
+.returnBtn {
+  background: rgba(15,61,58,0.1);
+  color: #0f3d3a;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { background: #0f3d3a; color: #fff; }
+}
+
+.stateText, .emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b6560;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14,17,15,0.55);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.confirmModal {
+  background: #f6f1e4;
+  border-radius: 22px;
+  border-top: 3px solid #0f3d3a;
+  padding: 32px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  animation: scaleUp 0.25s ease;
+
+  h3 { font-family: "Fraunces", serif; font-size: 1.25rem; color: #14110f; margin: 14px 0 10px; }
+  p { color: #6b6560; font-size: 0.92rem; margin-bottom: 24px; }
+  strong { color: #14110f; }
+}
+
+.confirmIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(15,61,58,0.1);
+  color: #0f3d3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cancelBtn {
+  background: rgba(20,17,15,0.05);
+  color: #4a4642;
+  border: 1px solid rgba(20,17,15,0.1);
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  &:hover { background: rgba(20,17,15,0.1); }
+}
+
+.returnConfirmBtn {
+  background: #0f3d3a;
+  color: #f6f1e4;
+  border: none;
+  padding: 11px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  &:hover { background: #c8a24d; color: #14110f; }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleUp { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+@media (max-width: 640px) {
+  .header { flex-direction: column; align-items: flex-start; }
+}

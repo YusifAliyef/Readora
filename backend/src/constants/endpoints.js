@@ -23,11 +23,13 @@ const endpoints = {
   },
   loans: {
     getMy: "/loans/my",
+    getAll: "/loans",
     return: "/loans/:id/return",
   },
   reviews: {
     post: "/reviews",
     getByBook: "/reviews/book/:bookId",
+    getMy: "/reviews/my",
     put: "/reviews/:id",
     delete: "/reviews/:id",
   },

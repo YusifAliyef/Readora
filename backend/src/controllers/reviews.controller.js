@@ -1,6 +1,5 @@
 const Review = require("../models/review.model");
 const Book = require("../models/books.model");
-const { message } = require("../validation/loans.validation");
 
 const reviewsController = {
   create: async (req, res) => {
@@ -40,6 +39,7 @@ const reviewsController = {
       res.status(500).json({ message: "Xəta baş verdi" });
     }
   },
+
   getBookReviews: async (req, res) => {
     try {
       const { bookId } = req.params;
@@ -52,6 +52,20 @@ const reviewsController = {
       res.status(500).json({ message: "Xəta baş verdi" });
     }
   },
+
+  // YENİ ƏLAVƏ OLUNDU — Navbar-dakı "Mənim Rəylərim" üçün
+  getMyReviews: async (req, res) => {
+    try {
+      const userId = req.user.userId || req.user.id || req.user._id;
+      const reviews = await Review.find({ user: userId })
+        .populate("book", "title author image")
+        .sort({ createdAt: -1 });
+      res.status(200).json(reviews);
+    } catch (error) {
+      res.status(500).json({ message: "Xəta baş verdi" });
+    }
+  },
+
   updateReview: async (req, res) => {
     try {
       const { id } = req.params;
@@ -71,7 +85,16 @@ const reviewsController = {
       if (comment) review.comment = comment;
 
       await review.save();
-      res.status(200).json({ message: "Rəyiniz uğurla yeniləndi", review });
+
+  
+      const updatedReview = await Review.findById(id).populate(
+        "book",
+        "title author image",
+      );
+
+      res
+        .status(200)
+        .json({ message: "Rəyiniz uğurla yeniləndi", review: updatedReview });
     } catch (error) {
       res.status(500).json({ message: "Xəta baş verdi" });
     }

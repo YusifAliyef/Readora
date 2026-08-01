@@ -23,6 +23,7 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userName", res.data.userName);
       localStorage.setItem("fullName", res.data.fullName || "");
+      localStorage.setItem("userId", res.data.id);
 
       toast.success("Uğurla daxil oldunuz");
 

@@ -21,7 +21,13 @@ function Navbar() {
         </nav>
 
         <div className={styles.rightActions}>
-          <button className={styles.wishlistBtn} onClick={() => navigate("/favorites")} aria-label="Bəyəndiklərim">
+          <button className={styles.iconBtn} onClick={() => navigate("/my-reviews")} aria-label="Mənim Rəylərim">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z" />
+            </svg>
+          </button>
+
+          <button className={styles.iconBtn} onClick={() => navigate("/favorites")} aria-label="Bəyəndiklərim">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M12 20.5s-7.5-4.6-10-9.3C.6 8 2 4.5 5.4 4c2.2-.3 4.1 1 5.6 3 1.5-2 3.4-3.3 5.6-3C20 4.5 21.4 8 20 11.2c-2.5 4.7-8 9.3-8 9.3Z"/>
             </svg>

@@ -40,7 +40,7 @@ const navItems = [
     ),
   },
   {
-    to: "/admin/reservations", 
+    to: "/admin/reservations",
     label: "Rezervasiyalar",
     icon: (
       <svg
@@ -52,6 +52,22 @@ const navItems = [
         strokeWidth="1.7"
       >
         <path d="M6 4h9a2 2 0 0 1 2 2v14l-6.5-3L4 20V6a2 2 0 0 1 2-2Z" />
+      </svg>
+    ),
+  },
+  {
+    to: "/admin/loans",
+    label: "İcarələr",
+    icon: (
+      <svg
+        width="19"
+        height="19"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      >
+        <path d="M4 6h16M4 12h16M4 18h10" />
       </svg>
     ),
   },
