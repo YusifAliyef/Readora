@@ -1,8 +1,8 @@
 const express = require("express");
 const endpoints = require("../constants/endpoints");
 const booksController = require("../controllers/books.controller");
-const booksMiddleware = require("../middlewares/books.middleware"); // Joi üçün
-const authMiddleware = require("../middlewares/auth.middleware");   // JWT üçün
+const booksMiddleware = require("../middlewares/books.middleware"); 
+const authMiddleware = require("../middlewares/auth.middleware");   
 
 const bookRouter = express.Router();
 

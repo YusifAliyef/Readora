@@ -53,7 +53,6 @@ const reviewsController = {
     }
   },
 
-  // YENİ ƏLAVƏ OLUNDU — Navbar-dakı "Mənim Rəylərim" üçün
   getMyReviews: async (req, res) => {
     try {
       const userId = req.user.userId || req.user.id || req.user._id;
@@ -86,7 +85,6 @@ const reviewsController = {
 
       await review.save();
 
-  
       const updatedReview = await Review.findById(id).populate(
         "book",
         "title author image",

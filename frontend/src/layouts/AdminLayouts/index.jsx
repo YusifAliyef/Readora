@@ -71,6 +71,24 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    to: "/admin/deliveries",
+    label: "Çatdırılmalar",
+    icon: (
+      <svg
+        width="19"
+        height="19"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      >
+        <path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z" />
+        <circle cx="7" cy="18" r="1.6" />
+        <circle cx="17.5" cy="18" r="1.6" />
+      </svg>
+    ),
+  },
 ];
 
 function AdminLayout() {

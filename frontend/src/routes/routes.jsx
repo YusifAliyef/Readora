@@ -21,6 +21,7 @@ import AdminReservationsManage from "../pages/Admin/ReservationsManage";
 import AdminLoansManage from "../pages/Admin/LoanManage";
 import BookReviews from "../pages/BookReviews";
 import MyReviews from "../pages/MyReviews";
+import AdminDeliveriesManage from "../pages/Admin/DeliveriesManage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
           { path: "books", element: <AdminBooksManage /> },
           { path: "reservations", element: <AdminReservationsManage /> },
           { path: "loans", element: <AdminLoansManage /> },
+          { path: "deliveries", element: <AdminDeliveriesManage /> },
         ],
       },
     ],

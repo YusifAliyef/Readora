@@ -42,7 +42,7 @@ function BookReviews() {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [bookId]);
 
   const myReview = reviews.find((r) => r.user?._id === currentUserId);

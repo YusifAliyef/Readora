@@ -1,11 +1,14 @@
 const Reservation = require("../models/reservation.model");
 const Book = require("../models/books.model");
+const Delivery = require("../models/delivery.model");
+const Loan = require("../models/loan.model");
+
+const LOAN_PERIOD_DAYS = 14;
 
 const reservationsController = {
-  // 1. Kitab rezerv et
   create: async (req, res) => {
     try {
-      const { bookId } = req.body;
+      const { bookId, deliveryMethod, address, phone } = req.body;
       const userId = req.user?.id || "645d1a2b3c4d5e6f7a8b9c0d";
 
       const book = await Book.findById(bookId);
@@ -14,9 +17,19 @@ const reservationsController = {
           .status(400)
           .json({ message: "Kitab tapılmadı və ya stokda yoxdur" });
       }
+
+      if (deliveryMethod === "delivery" && !address) {
+        return res
+          .status(400)
+          .json({ message: "Çatdırılma üçün ünvan daxil edilməlidir" });
+      }
+
       const newReservation = new Reservation({
         user: userId,
         book: bookId,
+        deliveryMethod: deliveryMethod === "delivery" ? "delivery" : "pickup",
+        address: address || "",
+        phone: phone || "",
       });
       await newReservation.save();
       res.status(201).json({
@@ -29,7 +42,6 @@ const reservationsController = {
     }
   },
 
-  // 2. İstifadəçinin öz rezervasiyaları
   getMyReservations: async (req, res) => {
     try {
       const userId = req.user?.id || "645d1a2b3c4d5e6f7a8b9c0d";
@@ -45,11 +57,9 @@ const reservationsController = {
     }
   },
 
-  // 3. BÜTÜN rezervasiyalar (Admin üçün)
   getAll: async (req, res) => {
     try {
-      const { status } = req.query; // istəyə görə status filtri: pending / approve
-
+      const { status } = req.query;
       const filter = status ? { status } : {};
 
       const reservations = await Reservation.find(filter)
@@ -64,7 +74,6 @@ const reservationsController = {
     }
   },
 
-  // 4. Rezervasiyanı təsdiqlə (Admin üçün)
   approve: async (req, res) => {
     try {
       const { id } = req.params;
@@ -93,6 +102,37 @@ const reservationsController = {
 
       await Book.findByIdAndUpdate(reservation.book, { $inc: { stock: -1 } });
 
+      if (reservation.deliveryMethod === "delivery") {
+        const existingDelivery = await Delivery.findOne({
+          reservation: reservation._id,
+        });
+        if (!existingDelivery) {
+          await Delivery.create({
+            reservation: reservation._id,
+            user: reservation.user,
+            book: reservation.book,
+            address: reservation.address,
+            phone: reservation.phone,
+          });
+        }
+      } else {
+        const existingLoan = await Loan.findOne({
+          user: reservation.user,
+          book: reservation.book,
+          status: "borrowed",
+        });
+        if (!existingLoan) {
+          const dueDate = new Date();
+          dueDate.setDate(dueDate.getDate() + LOAN_PERIOD_DAYS);
+
+          await Loan.create({
+            user: reservation.user,
+            book: reservation.book,
+            dueDate,
+          });
+        }
+      }
+
       const updated = await Reservation.findById(id)
         .populate("book", "title author price image")
         .populate("user", "userName fullName");
@@ -107,7 +147,6 @@ const reservationsController = {
     }
   },
 
-  // 5. Rezervasiyanı rədd et (Admin üçün)
   reject: async (req, res) => {
     try {
       const { id } = req.params;
@@ -130,7 +169,6 @@ const reservationsController = {
     }
   },
 
-  // Rezervasiyanı sil / ləğv et (Admin üçün)
   deleteReservation: async (req, res) => {
     try {
       const { id } = req.params;
@@ -140,13 +178,14 @@ const reservationsController = {
         return res.status(404).json({ message: "Rezervasiya tapılmadı" });
       }
 
-      // Əgər təsdiqlənmiş rezervasiya silinirsə, kitab stoku geri qaytarılır
       if (
         reservation.status === "approved" ||
         reservation.status === "approve"
       ) {
         await Book.findByIdAndUpdate(reservation.book, { $inc: { stock: 1 } });
       }
+
+      await Delivery.findOneAndDelete({ reservation: reservation._id });
 
       await Reservation.findByIdAndDelete(id);
 

@@ -77,8 +77,6 @@ const loanController = {
       if (loan.status === "returned") {
         return res.status(400).json({ message: "Bu kitab artıq qaytarılıb" });
       }
-
-      // Modeldəki dəqiq sahə adı: dueDate
       const overdueDays = getDaysDifference(loan.dueDate, currentDate);
 
       let fineAmount = 0;
@@ -92,7 +90,6 @@ const loanController = {
 
       await loan.save();
 
-      // Kitabın stokunu 1 ədəd artırırıq (books.model-də sahə adı: stock)
       await Book.findByIdAndUpdate(loan.book, { $inc: { stock: 1 } });
 
       const updated = await Loan.findById(id)

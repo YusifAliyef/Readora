@@ -170,6 +170,70 @@
     color: #12344d;
   }
 }
+.deliveryOptions {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.optionBtn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #f6f1e4;
+  border: 2px solid rgba(20, 17, 15, 0.08);
+  border-radius: 14px;
+  padding: 16px 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4a4642;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(200, 162, 77, 0.4);
+  }
+}
+
+.optionBtnActive {
+  background: rgba(15, 61, 58, 0.08);
+  border-color: #0f3d3a;
+  color: #0f3d3a;
+}
+
+.deliveryForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+  text-align: left;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #14110f;
+  }
+
+  input {
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(20, 17, 15, 0.12);
+    background: #ffffff;
+
+    &:focus {
+      outline: none;
+      border-color: #c8a24d;
+      box-shadow: 0 0 0 3px rgba(200, 162, 77, 0.15);
+    }
+  }
+}
 
 @keyframes fadeIn {
   from {

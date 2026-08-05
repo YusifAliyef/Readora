@@ -14,18 +14,18 @@ const loanSchema = new mongoose.Schema(
     },
     loanDate: {
       type: Date,
-      default: Date.now, // Kitabın götürüldüyü tarix
+      default: Date.now, 
     },
     dueDate: {
       type: Date,
-      required: true, // Qaytarılmalı olduğu son tarix (məsələn, 14 gün sonra)
+      required: true,
     },
     returnDate: {
-      type: Date, // Faktiki qaytarıldığı tarix (hələ qaytarmayıbsa null olur)
+      type: Date,
     },
     fine: {
       type: Number,
-      default: 0, // Gecikmə cəriməsi (AZN ilə)
+      default: 0,
     },
     status: {
       type: String,

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const reservationSchema = new mongoose.Schema(
   {
     user: {
@@ -16,6 +17,21 @@ const reservationSchema = new mongoose.Schema(
       enum: ["pending", "approve", "rejected"],
       default: "pending",
     },
+    deliveryMethod: {
+      type: String,
+      enum: ["pickup", "delivery"],
+      default: "pickup",
+    },
+    address: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    phone: {
+      type: String,
+      trim: true,
+      default: "",
+    },
   },
   {
     timestamps: true,
@@ -23,6 +39,6 @@ const reservationSchema = new mongoose.Schema(
   },
 );
 
-const Reservation=mongoose.model("Reservaton", reservationSchema);
+const Reservation = mongoose.model("Reservation", reservationSchema);
 
-module.exports=Reservation;
+module.exports = Reservation;

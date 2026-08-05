@@ -11,7 +11,6 @@ import { toast } from "react-hot-toast";
 const API_URL = "http://localhost:3300";
 const WishlistContext = createContext();
 
-// Sabit User ID
 const CURRENT_USER_ID = "6696b8e8f8d9b1234567890a";
 
 export function WishlistProvider({ children }) {
@@ -63,7 +62,6 @@ export function WishlistProvider({ children }) {
       }
     } else {
       try {
-        // POST: userId-ni body-də göndəririk
         const res = await axios.post(`${API_URL}/wishlist`, {
           bookId,
           userId: CURRENT_USER_ID,
