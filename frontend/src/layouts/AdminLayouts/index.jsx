@@ -95,6 +95,14 @@ function AdminLayout() {
   const navigate = useNavigate();
   const adminName = localStorage.getItem("adminName") || "Admin";
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 6) return "Xoş gecələr";
+    if (hour < 12) return "Sabahınız xeyir";
+    if (hour < 18) return "Gününüz xeyir";
+    return "Axşamınız xeyir";
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminName");
@@ -146,9 +154,13 @@ function AdminLayout() {
 
       <main className={styles.content}>
         <header className={styles.topbar}>
-          <span>
-            Salam, <strong>{adminName}</strong> 👋
-          </span>
+          <div className={styles.greeting}>
+            <span className={styles.greetingLabel}>{getGreeting()}</span>
+            <strong>{adminName}</strong>
+          </div>
+          <div className={styles.avatar}>
+            {adminName.charAt(0).toUpperCase()}
+          </div>
         </header>
         <div className={styles.pageBody}>
           <Outlet />

@@ -61,7 +61,7 @@ const userController = {
           message: "Uğurla daxil oldunuz",
           userName: user.userName,
           fullName: user.fullName,
-          role: user.role, 
+          role: user.role,
           id: user._id,
           token,
         });
@@ -81,7 +81,7 @@ const userController = {
     }
 
     try {
-      const decoded = jwt.verify(token, "Yusif123");
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       return res.status(200).json({
         message: "Token is valid",

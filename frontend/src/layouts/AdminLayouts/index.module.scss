@@ -89,13 +89,48 @@
 }
 
 .topbar {
-  padding: 22px 40px;
+  padding: 20px 40px;
   background: #ffffff;
   border-bottom: 1px solid rgba(20,17,15,0.06);
-  font-size: 0.95rem;
-  color: #4a4642;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  strong { font-family: "Fraunces", serif; color: #14110f; }
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.greetingLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c8a24d;
+}
+
+.greeting strong {
+  font-family: "Fraunces", serif;
+  font-size: 1.15rem;
+  color: #14110f;
+  font-weight: 600;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(155deg, #123f3c 0%, #0f2624 100%);
+  color: #c8a24d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .pageBody {
@@ -109,4 +144,5 @@
   .navLink span, .navLink { font-size: 0; gap: 0; justify-content: center; }
   .logoutBtn { font-size: 0; justify-content: center; }
   .pageBody { padding: 24px; }
+  .topbar { padding: 16px 20px; }
 }
