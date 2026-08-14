@@ -4,8 +4,8 @@ Full-stack kitab rezervasiya və icarə sistemi. Node.js/Express/MongoDB backend
 
 ## Xüsusiyyətlər
 
-- Admin qeydiyyatı və girişi (JWT)
-- Kitabların axtarışı, səhifələnməsi
+- Admin qeydiyyatı və girişi (JWT, bcrypt)
+- Kitabların axtarışı və səhifələnməsi (pagination)
 - Rezervasiya sistemi (özün götür / evə çatdırılma)
 - İcarə sistemi, gecikmə cəriməsi hesablanması
 - İstək siyahısı (Wishlist)
@@ -20,20 +20,57 @@ Full-stack kitab rezervasiya və icarə sistemi. Node.js/Express/MongoDB backend
 ## Quraşdırma
 
 ### Backend
-\`\`\`bash
+
+```bash
 cd backend
 npm install
-# .env.example-i .env-ə kopyala və dəyərləri doldur
-npm start
-\`\`\`
+cp .env.example .env
+# .env faylında DB_BASE_URL və JWT_SECRET dəyərlərini doldur
+npm run dev
+```
 
 ### Frontend
-\`\`\`bash
+
+```bash
 cd frontend
 npm install
 npm run dev
-\`\`\`
+```
 
 ## Environment Dəyişənləri
 
-`backend/.env.example` faylına bax.
+`backend/.env.example` faylına bax:
+
+- `PORT` — server portu (default: 3300)
+- `DB_BASE_URL` — MongoDB bağlantı URI-si
+- `JWT_SECRET` — JWT tokenlərin imzalanması üçün gizli açar
+
+## Admin Girişi
+
+Admin panel yalnız `role: "admin"` olan istifadəçilər üçün açıqdır. Yeni admin hesabı yaratmaq üçün:
+
+1. Adi qeydiyyat endpoint-i (`POST /register`) ilə istifadəçi yarat
+2. MongoDB-də həmin istifadəçinin `role` sahəsini `"admin"` et
+3. `/admin/login` ünvanından daxil ol
+
+## Qovluq Strukturu
+
+```
+backend/
+  src/
+    config/       - DB bağlantısı
+    constants/    - endpoint yolları
+    controllers/  - route məntiqi
+    middlewares/  - auth, validation, admin yoxlaması
+    models/       - Mongoose sxemləri
+    routes/       - Express router-lər
+    utils/        - köməkçi funksiyalar
+    validation/   - Joi sxemləri
+frontend/
+  src/
+    components/   - təkrar istifadə olunan UI hissələri
+    context/      - React Context (Wishlist)
+    layouts/      - Navbar, Footer, Admin/Main layout-lar
+    pages/        - səhifələr (admin daxil)
+    routes/       - React Router konfiqurasiyası
+```
