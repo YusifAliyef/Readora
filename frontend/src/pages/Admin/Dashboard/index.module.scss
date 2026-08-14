@@ -57,3 +57,16 @@
   justify-content: center;
   margin-bottom: 8px;
 }
+
+@media (max-width: 640px) {
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    padding: 22px 20px;
+  }
+}

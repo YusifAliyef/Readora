@@ -12,3 +12,10 @@
   margin: 0 auto;
   padding: 40px 0;
 }
+
+@media (max-width: 640px) {
+  .mainContent {
+    width: 94%;
+    padding: 24px 0;
+  }
+}

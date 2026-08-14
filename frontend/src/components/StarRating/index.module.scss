@@ -19,3 +19,9 @@
     transform: scale(1.15);
   }
 }
+
+@media (max-width: 480px) {
+  .stars {
+    gap: 1px;
+  }
+}
