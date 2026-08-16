@@ -1,15 +1,15 @@
 const Review = require("../models/review.model");
 const Book = require("../models/books.model");
 
+const FAKE_USER_ID = "645d1a2b3c4d5e6f7a8b9c0d"; // reservations.controller.js ilə eyni
+
 const reviewsController = {
   create: async (req, res) => {
     try {
       const { bookId, rating, comment } = req.body;
-
-      const userId = req.user.userId;
+      const userId = req.user?.userId || FAKE_USER_ID;
 
       const book = await Book.findById(bookId);
-
       if (!book) {
         return res.status(404).json({ message: "Kitab tapılmadı" });
       }
@@ -18,20 +18,20 @@ const reviewsController = {
         user: userId,
         book: bookId,
       });
-
       if (existingReview) {
         return res
           .status(400)
           .json({ message: "Siz bu kitaba artıq rəy bildirmisiniz" });
       }
+
       const newReview = new Review({
         user: userId,
         book: bookId,
         rating,
         comment,
       });
-
       await newReview.save();
+
       res
         .status(201)
         .json({ message: "Rəyiniz uğurla əlavə olundu", review: newReview });
@@ -55,7 +55,7 @@ const reviewsController = {
 
   getMyReviews: async (req, res) => {
     try {
-      const userId = req.user.userId || req.user.id || req.user._id;
+      const userId = req.user?.userId || FAKE_USER_ID;
       const reviews = await Review.find({ user: userId })
         .populate("book", "title author image")
         .sort({ createdAt: -1 });
@@ -68,7 +68,7 @@ const reviewsController = {
   updateReview: async (req, res) => {
     try {
       const { id } = req.params;
-      const userId = req.user.userId || req.user.id || req.user._id;
+      const userId = req.user?.userId || FAKE_USER_ID;
       const { rating, comment } = req.body;
 
       const review = await Review.findById(id);
@@ -89,7 +89,6 @@ const reviewsController = {
         "book",
         "title author image",
       );
-
       res
         .status(200)
         .json({ message: "Rəyiniz uğurla yeniləndi", review: updatedReview });
@@ -101,7 +100,7 @@ const reviewsController = {
   deleteReview: async (req, res) => {
     try {
       const { id } = req.params;
-      const userId = req.user.userId || req.user.id || req.user._id;
+      const userId = req.user?.userId || FAKE_USER_ID;
 
       const review = await Review.findById(id);
       if (!review) return res.status(404).json({ message: "Rəy tapılmadı" });
